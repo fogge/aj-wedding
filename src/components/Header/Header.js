@@ -1,20 +1,17 @@
 import React from "react";
 import "./Header.scss";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <header>
       <div>
-        <a href="#">Bröllop</a>
-        <img src="logo.png" class="logo" alt="logo" />
-        <a href="#">Osa</a>
+        <Link to="/">Bröllop</Link>
+        <img src="logo.png" className="logo" alt="logo" />
+        <Link to="/rvsp">Osa</Link>
       </div>
-      <h1>
-        Vi är förlovade!
-      </h1>
-      <p>
-        Bröllopet hålls den 5 September 2019 
-      </p>
+      <h1>Vi gifter oss!</h1>
+      <p>Bröllopet hålls den 5 September 2019</p>
     </header>
   );
 };
