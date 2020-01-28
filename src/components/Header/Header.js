@@ -11,7 +11,7 @@ const Header = () => {
         <Link to="/rvsp">Osa</Link>
       </div>
       <h1>Vi gifter oss!</h1>
-      <p>Bröllopet hålls den 5 September 2019</p>
+      <p>Bröllopet hålls den 5 september 2020</p>
     </header>
   );
 };
