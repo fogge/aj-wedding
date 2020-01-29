@@ -2,17 +2,15 @@ import React, { useReducer, useState } from "react";
 import "./Forms.scss";
 import Modal from "../Utility/Modal";
 import { Loader } from "../Utility/Loader";
-require('dotenv').config()
-const NAME = "name";
-const EMAIL = "email";
-const FOOD = "food";
-const PHONE_NUMBER = "phoneNumber";
+import { constants, modals } from "../Utility/constants";
+require("dotenv").config();
+
+const { NAME, EMAIL, FOOD, PHONE_NUMBER, DELETE, ADD_NEW, RESET } = constants;
+const { CONFIRMATION, ERROR, THANK } = modals;
 
 const Forms = () => {
   const [loader, setLoader] = useState(false);
-  const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
-  const [errorModalOpen, setErrorModalOpen] = useState(false);
-  const [thankModalOpen, setThankModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState("");
   const [password, setPassword] = useState("");
 
   const initialState = [{ name: "", email: "", food: "", phoneNumber: "" }];
@@ -32,9 +30,11 @@ const Forms = () => {
       case PHONE_NUMBER:
         state[action.index].phoneNumber = action.value;
         return newState;
-      case "addNew":
+      case DELETE:
+        return newState.filter((_, i) => i !== action.id);
+      case ADD_NEW:
         return [...state, { name: "", email: "", food: "", phoneNumber: "" }];
-      case "reset":
+      case RESET:
         return initialState;
       default:
         throw new Error();
@@ -43,16 +43,14 @@ const Forms = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  console.log(state);
-
   const submit = () => {
-    setConfirmationModalOpen(false);
+    setModalOpen("");
     setLoader(true);
 
     const scriptURL =
       "https://script.google.com/macros/s/AKfycbwsX4NV86dYE41W8Fq3VaD4wHxNQJ8Aozkp-P1j30StViFS7Koa/exec";
 
-    const testForm = state.map((inputValues, i) => {
+    const testForm = state.map(inputValues => {
       const newFormData = new FormData();
       newFormData.set(NAME, inputValues.name);
       newFormData.set(EMAIL, inputValues.email);
@@ -68,25 +66,25 @@ const Forms = () => {
     )
       .then(response => {
         setLoader(false);
-        dispatch({ type: "reset" });
-        setThankModalOpen(true);
+        dispatch({ type: RESET });
+        setModalOpen(THANK);
       })
       .catch(error => {
         setLoader(false);
-        setErrorModalOpen(true);
+        setModalOpen(ERROR);
       });
   };
 
   const confirmationRender = () => {
     return (
       <>
-        <div class="confirmation">
+        <div className="confirmation">
           <h2>
             Hej. Vi ser fram emot att fira vårt bröllop med dig! Vänligen
             kontrollera så allting stämmer!
           </h2>
           {state.map((guest, i) => (
-            <>
+            <div key={i}>
               <h3>Gäst: {guest.name}</h3>
               <p>Namn: {guest.name}</p>
               <p>Email: {guest.email ? guest.email : "-"}</p>
@@ -94,19 +92,22 @@ const Forms = () => {
                 Telefonnummer: {guest.phoneNumber ? guest.phoneNumber : "-"}
               </p>
               <p>Mat: {guest.food ? guest.food : "-"}</p>
-            </>
+            </div>
           ))}
         </div>
-        <form class="password">
+        <form className="password">
           <label>
             <i
               className={`fas ${
-                password.toUpperCase() === process.env.REACT_APP_PASSWORD ? "fa-unlock" : "fa-lock"
+                password.toUpperCase() === process.env.REACT_APP_PASSWORD
+                  ? "fa-unlock"
+                  : "fa-lock"
               }`}
             ></i>
             <input
               name="password"
               type="password"
+              autoComplete="new-password"
               placeholder="Skriv in lösenordet som finns på inbjudan"
               value={password}
               onChange={e => setPassword(e.target.value)}
@@ -120,7 +121,13 @@ const Forms = () => {
   const renderInputFields = () =>
     state.map((formData, i) => (
       <div key={i}>
-        <p>{formData.name ? `Gäst: ${formData.name}` : `Gäst ${i + 1}`}</p>
+        <div className="guest__container">
+          <p>{formData.name ? `Gäst: ${formData.name}` : `Gäst ${i + 1}`}</p>
+          <i
+            className="fas fa-trash"
+            onClick={() => dispatch({ type: DELETE, id: i })}
+          ></i>
+        </div>
         <label>
           <i className="fas fa-user"></i>
           <input
@@ -129,7 +136,7 @@ const Forms = () => {
             placeholder="För- och efternamn"
             value={formData.name}
             onChange={e =>
-              dispatch({ type: "name", value: e.target.value, index: i })
+              dispatch({ type: NAME, value: e.target.value, index: i })
             }
           />
         </label>
@@ -142,7 +149,7 @@ const Forms = () => {
             placeholder="Telefonnummer"
             value={formData.phoneNumber}
             onChange={e =>
-              dispatch({ type: "phoneNumber", value: e.target.value, index: i })
+              dispatch({ type: PHONE_NUMBER, value: e.target.value, index: i })
             }
           />
         </label>
@@ -155,7 +162,7 @@ const Forms = () => {
             placeholder="Email"
             value={formData.email}
             onChange={e =>
-              dispatch({ type: "email", value: e.target.value, index: i })
+              dispatch({ type: EMAIL, value: e.target.value, index: i })
             }
           />
         </label>
@@ -168,24 +175,27 @@ const Forms = () => {
             placeholder="Allergier och specialkost"
             value={formData.food}
             onChange={e =>
-              dispatch({ type: "food", value: e.target.value, index: i })
+              dispatch({ type: FOOD, value: e.target.value, index: i })
             }
           />
         </label>
       </div>
     ));
 
+  const isButtonDisabled = () =>
+    !state.length || state.some(formData => !(formData.name.length > 1));
+
   return (
     <>
-      {errorModalOpen && (
+      {modalOpen === ERROR && (
         <Modal
           content={<h2>Någonting gick fel :(. Pröva igen.</h2>}
-          confirm={() => setErrorModalOpen(false)}
+          confirm={() => setModalOpen("")}
           decline={null}
           confirmText="Ok"
         />
       )}
-      {thankModalOpen && (
+      {modalOpen === THANK && (
         <Modal
           content={
             <h2>
@@ -193,19 +203,21 @@ const Forms = () => {
               den 5e september. Ses då!
             </h2>
           }
-          confirm={() => setThankModalOpen(false)}
+          confirm={() => setModalOpen("")}
           decline={null}
           confirmText="Ok"
         />
       )}
-      {confirmationModalOpen && (
+      {modalOpen === CONFIRMATION && (
         <Modal
           content={confirmationRender()}
           confirm={submit}
-          decline={() => setConfirmationModalOpen(false)}
+          decline={() => setModalOpen("")}
           confirmText="Nu osar vi!"
           declineText="Inte riktigt klar.."
-          confirmDisabled={password.toUpperCase() !== process.env.REACT_APP_PASSWORD}
+          confirmDisabled={
+            password.toUpperCase() !== process.env.REACT_APP_PASSWORD
+          }
         />
       )}
       {loader && <Loader />}
@@ -213,10 +225,15 @@ const Forms = () => {
       <form>{renderInputFields()}</form>
 
       <div className="button__container">
-        <button onClick={() => dispatch({ type: "addNew" })}>
+        <button onClick={() => dispatch({ type: ADD_NEW })}>
           Lägg till fler gäster
         </button>
-        <button onClick={() => setConfirmationModalOpen(true)}>Osa!</button>
+        <button
+          disabled={isButtonDisabled()}
+          onClick={() => setModalOpen(CONFIRMATION)}
+        >
+          Osa!
+        </button>
       </div>
     </>
   );

@@ -1,14 +1,14 @@
 import React from "react";
 import "./Header.scss";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
     <header>
       <div>
-        <Link to="/">Bröllop</Link>
+        <NavLink exact activeClassName="nav_active" to="/">Bröllop</NavLink>
         <img src="logo.png" className="logo" alt="logo" />
-        <Link to="/rvsp">Osa</Link>
+        <NavLink activeClassName="nav_active" to="/rvsp">Osa</NavLink>
       </div>
       <h1>Vi gifter oss!</h1>
       <p>Bröllopet hålls den 5 september 2020</p>

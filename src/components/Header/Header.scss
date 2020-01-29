@@ -8,7 +8,7 @@ header {
     ),
     url("../../imgs/champagne.jpg");
   background-size: cover;
-  height: 400px;
+  height: 350px;
   box-shadow: 0 0px 8px 3px rgba(80, 58, 70, 0.3);
   position: relative;
   z-index: 1;
@@ -17,12 +17,14 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 150px;
-
+    height: 120px;
+    .nav_active {
+      text-decoration: underline;
+    }
     .logo {
-      height: 150px;
+      height: 120px;
       object-fit: contain;
-      margin: 0 60px;
+      margin: 0 30px;
     }
     a {
       font-size: 2rem;
@@ -44,5 +46,16 @@ header {
     margin-top: 10px;
     color: #fff;
     opacity: 0.8;
+  }
+
+  @media (min-width: 768px) {
+    height: 400px;
+    div {
+      height: 150px;
+      .logo {
+        height: 150px;
+        margin: 0 60px;
+      }
+    }
   }
 }
