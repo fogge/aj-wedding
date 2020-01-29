@@ -1,12 +1,22 @@
 main {
   background-image: linear-gradient(
       90deg,
-      rgba(80, 58, 70, 0.15) 0%,
+      rgba(80, 58, 70, 0.2) 0%,
       rgba(255, 255, 255, 0.5) 25%,
       rgba(255, 255, 255, 0.5) 75%,
-      rgba(80, 58, 70, 0.15) 100%
+      rgba(80, 58, 70, 0.2) 100%
     ),
-    url("../../imgs/roses.jpg");
+    url("../../imgs/background_small.jpg");
+  @media (min-width: 768px) {
+    background-image: linear-gradient(
+        90deg,
+        rgba(80, 58, 70, 0.2) 0%,
+        rgba(255, 255, 255, 0.5) 25%,
+        rgba(255, 255, 255, 0.5) 75%,
+        rgba(80, 58, 70, 0.2) 100%
+      ),
+      url("../../imgs/background.jpg");
+  }
   background-size: cover;
   display: flex;
   justify-content: center;
@@ -50,7 +60,7 @@ main {
         z-index: 2;
         &::after {
           content: "";
-          background: url("../../imgs/card.png");
+          background: url("../../imgs/card.jpg");
           opacity: 0.9;
           top: 0;
           left: 0;
