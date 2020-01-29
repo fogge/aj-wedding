@@ -16,6 +16,7 @@ main {
         rgba(80, 58, 70, 0.2) 100%
       ),
       url("../../imgs/background.jpg");
+    min-height: calc(100vh - 400px);
   }
   background-size: cover;
   display: flex;
@@ -35,7 +36,6 @@ main {
     }
     @media (min-width: 768px) {
       padding: 40px 40px;
-      min-height: calc(100vh - 400px);
       h2 {
         font-size: 2.3rem;
         width: 50%;
