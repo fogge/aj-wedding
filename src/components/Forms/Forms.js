@@ -3,6 +3,8 @@ import "./Forms.scss";
 import Modal from "../Utility/Modal";
 import { Loader } from "../Utility/Loader";
 import { constants, modals } from "../Utility/constants";
+import CustomList from "../Content/CustomList";
+
 require("dotenv").config();
 
 const { NAME, EMAIL, FOOD, PHONE_NUMBER, DELETE, ADD_NEW, RESET } = constants;
@@ -12,6 +14,28 @@ const Forms = () => {
   const [loader, setLoader] = useState(false);
   const [modalOpen, setModalOpen] = useState("");
   const [password, setPassword] = useState("");
+
+  const listItemsInfo = [
+    { text: "Vigsel och fest på samma plats!", fontAwesome: "" },
+    { text: "Var: Sörgården i Flyinge", fontAwesome: "fas fa-map-marker-alt" },
+    { text: "När: 5e september 2020 - 14:30", fontAwesome: "far fa-clock" },
+    { text: "Dresscode: Det finaste du har", fontAwesome: "fas fa-tshirt" },
+    { text: "Presenter: Pengar till smekmånaden", fontAwesome: "fas fa-gift" },
+    { text: "Festen är barnfri", fontAwesome: "fas fa-baby" },
+    { type: "linebreak" },
+    {
+      text: "Vid tal och liknande hör av er till:",
+      fontAwesome: "far fa-comment"
+    },
+    {
+      text: "Toastmadame: Mathilda Mattsson 0708706660",
+      fontAwesome: "fas fa-female"
+    },
+    {
+      text: "Toastmaster: Robert Lucchesi 0739189604",
+      fontAwesome: "fas fa-male"
+    }
+  ];
 
   const initialState = [{ name: "", email: "", food: "", phoneNumber: "" }];
 
@@ -111,6 +135,9 @@ const Forms = () => {
               placeholder="Skriv in lösenordet som finns på inbjudan"
               value={password}
               onChange={e => setPassword(e.target.value)}
+              onKeyPress={e => {
+                if (e.key === "Enter") e.preventDefault();
+              }}
             />
           </label>
         </form>
@@ -198,10 +225,13 @@ const Forms = () => {
       {modalOpen === THANK && (
         <Modal
           content={
-            <h2>
-              Tack för att du osade! Du/ni har nu gått med för att fira med oss
-              den 5e september. Ses då!
-            </h2>
+            <div>
+              <h2>
+                Tack för att du osade! Du/ni har nu gått med för att fira med
+                oss den 5e september. Ses då!
+              </h2>
+              <CustomList listItems={listItemsInfo} />
+            </div>
           }
           confirm={() => setModalOpen("")}
           decline={null}
@@ -232,7 +262,7 @@ const Forms = () => {
           disabled={isButtonDisabled()}
           onClick={() => setModalOpen(CONFIRMATION)}
         >
-          Osa!
+          O.S.A!
         </button>
       </div>
     </>

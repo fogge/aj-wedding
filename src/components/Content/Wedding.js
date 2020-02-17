@@ -49,7 +49,6 @@ const Wedding = () => {
       <div className="boxes">
         <div className="box">
           <h3>Snabbinfo:</h3>
-
           <CustomList listItems={listItemsInfo} />
         </div>
 
