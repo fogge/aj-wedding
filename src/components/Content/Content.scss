@@ -50,7 +50,7 @@ main {
       flex-direction: column;
       align-items: center;
       h2 {
-        text-shadow: rgba(255,255,255, 1) 0 0 2px;
+        text-shadow: rgba(255, 255, 255, 1) 0 0 2px;
 
         font-family: "Yanone Kaffeesatz", sans-serif;
         font-weight: 400;
@@ -66,7 +66,7 @@ main {
       }
       p {
         line-height: 1.2em;
-        text-shadow: rgba(255,255,255, 1) 0 0 2px;
+        text-shadow: rgba(255, 255, 255, 1) 0 0 2px;
       }
     }
 
@@ -75,6 +75,43 @@ main {
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
+      .pictures {
+        width: 100%;
+        padding: 0 20px;
+        text-align: left;
+        margin: 0 0 20px;
+        position: relative;
+        z-index: 2;
+
+        @media (min-width: 1024px) {
+          width: 48%;
+        }
+
+        img {
+          box-shadow: 1px 16px 6px -7px rgba(80, 58, 70, 0.5);
+
+          width: 33%;
+          &.pic1 {
+            transform: rotate(4deg);
+          }
+          &.pic2 {
+            transform: rotate(-4deg);
+          }
+          &.pic3 {
+            transform: rotate(7deg);
+          }
+          &.pic4 {
+            transform: rotate(-3deg);
+          }
+          &.pic5 {
+            transform: rotate(6deg);
+          }
+          &.pic6 {
+            transform: rotate(-5deg);
+          }
+        }
+      }
+
       .box {
         width: 100%;
         padding: 20px;
@@ -83,6 +120,7 @@ main {
         margin: 20px 0;
         position: relative;
         z-index: 2;
+
         &::after {
           content: "";
           background: url("../../imgs/card.jpg");
@@ -96,13 +134,13 @@ main {
         }
 
         @media (min-width: 1024px) {
-          width: 45%;
+          width: 48%;
         }
 
         .line-break {
           height: 1px;
-          box-shadow: 0 0 3px 0px rgba(0,0,0, 0.3);
-          background: rgba(0,0,0, 0.3);
+          box-shadow: 0 0 3px 0px rgba(0, 0, 0, 0.3);
+          background: rgba(0, 0, 0, 0.3);
           width: calc(100% + 37px);
           display: block;
           margin: 20px 0 20px -37px;

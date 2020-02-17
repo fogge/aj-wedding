@@ -10,7 +10,10 @@ const Wedding = () => {
     { text: "Presenter: Pengar till smekmånaden", fontAwesome: "fas fa-gift" },
     { text: "Festen är barnfri", fontAwesome: "fas fa-baby" },
     { type: "linebreak" },
-    { text: "Vid tal och liknande hör av er till:", fontAwesome: "far fa-comment" },
+    {
+      text: "Vid tal och liknande hör av er till:",
+      fontAwesome: "far fa-comment"
+    },
     {
       text: "Toastmadame: Mathilda Mattsson 0708706660",
       fontAwesome: "fas fa-female"
@@ -19,13 +22,6 @@ const Wedding = () => {
       text: "Toastmaster: Robert Lucchesi 0739189604",
       fontAwesome: "fas fa-male"
     }
-  ];
-
-  const listItemsPresents = [
-    { text: "Pengar", fontAwesome: "fas fa-money-bill-wave" },
-    { text: "Koenigsegg Jesko", fontAwesome: "fas fa-car" },
-    { text: "Boeing AH-64 Apache", fontAwesome: "fas fa-helicopter" },
-    { text: "Sveriges Kungahus", fontAwesome: "fas fa-home" }
   ];
 
   return (
@@ -57,10 +53,13 @@ const Wedding = () => {
           <CustomList listItems={listItemsInfo} />
         </div>
 
-        <div className="box">
-          <h3>Presenter:</h3>
-
-          <CustomList listItems={listItemsPresents} />
+        <div className="pictures">
+          <img src="aj1.png" className="pic1" alt="Alex och Josefina" />
+          <img src="aj2.png" className="pic2" alt="Alex och Josefina" />
+          <img src="aj3.png" className="pic3" alt="Alex och Josefina" />
+          <img src="aj4.png" className="pic4" alt="Alex och Josefina" />
+          <img src="aj5.png" className="pic5" alt="Alex och Josefina" />
+          <img src="aj6.png" className="pic6" alt="Alex och Josefina" />
         </div>
       </div>
     </>
