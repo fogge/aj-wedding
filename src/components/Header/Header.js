@@ -11,7 +11,7 @@ const Header = () => {
         <NavLink activeClassName="nav_active" to="/rvsp">Osa</NavLink>
       </div>
       <h1>Vi gifter oss!</h1>
-      <p>Bröllopet hålls den 5 september 2020</p>
+      <p>5 september 2020</p>
     </header>
   );
 };
