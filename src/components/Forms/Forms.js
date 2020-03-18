@@ -4,10 +4,22 @@ import Modal from "../Utility/Modal";
 import { Loader } from "../Utility/Loader";
 import { constants, modals } from "../Utility/constants";
 import CustomList from "../Content/CustomList";
+import Checkbox from "./Checkbox";
+
+import { listItemsInfo } from "../Utility/listItemsInfo";
 
 require("dotenv").config();
 
-const { NAME, EMAIL, FOOD, PHONE_NUMBER, DELETE, ADD_NEW, RESET } = constants;
+const {
+  NAME,
+  EMAIL,
+  FOOD,
+  PHONE_NUMBER,
+  DELETE,
+  ADD_NEW,
+  RESET,
+  CANT_ATTEND
+} = constants;
 const { CONFIRMATION, ERROR, THANK } = modals;
 
 const Forms = () => {
@@ -15,29 +27,9 @@ const Forms = () => {
   const [modalOpen, setModalOpen] = useState("");
   const [password, setPassword] = useState("");
 
-  const listItemsInfo = [
-    { text: "Vigsel och fest på samma plats!", fontAwesome: "" },
-    { text: "Var: Sörgården i Flyinge", fontAwesome: "fas fa-map-marker-alt" },
-    { text: "När: 5e september 2020 - 14:30", fontAwesome: "far fa-clock" },
-    { text: "Dresscode: Det finaste du har", fontAwesome: "fas fa-tshirt" },
-    { text: "Presenter: Pengar till smekmånaden", fontAwesome: "fas fa-gift" },
-    { text: "Festen är barnfri", fontAwesome: "fas fa-baby" },
-    { type: "linebreak" },
-    {
-      text: "Vid tal och liknande hör av er till:",
-      fontAwesome: "far fa-comment"
-    },
-    {
-      text: "Toastmadame: Mathilda Mattsson 0708706660",
-      fontAwesome: "fas fa-female"
-    },
-    {
-      text: "Toastmaster: Robert Lucchesi 0739189604",
-      fontAwesome: "fas fa-male"
-    }
+  const initialState = [
+    { name: "", email: "", food: "", phoneNumber: "", cantAttend: false }
   ];
-
-  const initialState = [{ name: "", email: "", food: "", phoneNumber: "" }];
 
   function reducer(state, action) {
     const newState = [...state];
@@ -54,10 +46,16 @@ const Forms = () => {
       case PHONE_NUMBER:
         state[action.index].phoneNumber = action.value;
         return newState;
+      case CANT_ATTEND:
+        state[action.index].cantAttend = action.value;
+        return newState;
       case DELETE:
         return newState.filter((_, i) => i !== action.id);
       case ADD_NEW:
-        return [...state, { name: "", email: "", food: "", phoneNumber: "" }];
+        return [
+          ...state,
+          { name: "", email: "", food: "", phoneNumber: "", cantAttend: false }
+        ];
       case RESET:
         return initialState;
       default:
@@ -66,6 +64,8 @@ const Forms = () => {
   }
 
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  console.log(state);
 
   const submit = () => {
     setModalOpen("");
@@ -80,6 +80,10 @@ const Forms = () => {
       newFormData.set(EMAIL, inputValues.email);
       newFormData.set(FOOD, inputValues.food);
       newFormData.set(PHONE_NUMBER, inputValues.phoneNumber);
+      newFormData.set(
+        CANT_ATTEND,
+        inputValues.cantAttend ? "Kan inte komma" : ""
+      );
       return newFormData;
     });
 
@@ -171,10 +175,11 @@ const Forms = () => {
         <label>
           <i className="fas fa-phone-alt"></i>
           <input
+            disabled={state[i].cantAttend}
             name={PHONE_NUMBER}
             type="tel"
             placeholder="Telefonnummer"
-            value={formData.phoneNumber}
+            value={state[i].cantAttend ? "" : formData.phoneNumber}
             onChange={e =>
               dispatch({ type: PHONE_NUMBER, value: e.target.value, index: i })
             }
@@ -184,28 +189,40 @@ const Forms = () => {
         <label>
           <i className="fas fa-envelope"></i>
           <input
+            disabled={state[i].cantAttend}
             name={EMAIL}
             type="email"
             placeholder="Email"
-            value={formData.email}
-            onChange={e =>
-              dispatch({ type: EMAIL, value: e.target.value, index: i })
-            }
+            value={state[i].cantAttend ? "" : formData.email}
+            onChange={() => dispatch({ type: EMAIL, index: i })}
           />
         </label>
 
         <label>
           <i className="fas fa-utensils"></i>
           <input
+            disabled={state[i].cantAttend}
             name={FOOD}
             type="text"
             placeholder="Allergier och specialkost"
-            value={formData.food}
+            value={state[i].cantAttend ? "" : formData.food}
             onChange={e =>
               dispatch({ type: FOOD, value: e.target.value, index: i })
             }
           />
         </label>
+        <Checkbox
+          checked={state[i].cantAttend}
+          name={CANT_ATTEND}
+          labelText="Kan inte komma"
+          onChange={e =>
+            dispatch({
+              type: CANT_ATTEND,
+              value: !state[i].cantAttend,
+              index: i
+            })
+          }
+        />
       </div>
     ));
 

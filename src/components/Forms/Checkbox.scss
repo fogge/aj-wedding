@@ -1,0 +1,97 @@
+.label-holder {
+  grid-area: label;
+  display: flex;
+  margin-left: 18px;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 0px;
+  margin-top: 4px;
+  label {
+    cursor: pointer;
+    font-family: "Yanone Kaffeesatz", sans-serif;
+
+  }
+}
+
+.root {
+  margin: 0;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  position: relative;
+  label {
+    cursor: pointer;
+  }
+  &::before {
+    content: "";
+    border: 3px solid black;
+    background: #f9f9f9;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    box-sizing: border-box;
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+.fill-false {
+  svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    width: 0;
+    height: 0;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease-in, height 0.2s ease-in;
+  }
+}
+
+.fill-true {
+  svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    width: 16px;
+    height: 16px;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease-in, height 0.2s ease-in;
+  }
+}
+
+.input {
+  opacity: 0;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:checked {
+    & ~ .fill {
+      width: calc(100% - 18px);
+      height: calc(100% - 18px);
+      transition: width 0.2s ease-out, height 0.2s ease-out;
+
+      &::before {
+        opacity: 1;
+        transition: opacity 1s ease;
+      }
+    }
+  }
+}
+
+.checkbox-holder {
+  display: flex;
+  align-items: center;
+  margin: 0 0 16px;
+}

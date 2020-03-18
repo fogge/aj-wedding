@@ -1,29 +1,8 @@
 import React from "react";
 import CustomList from "./CustomList";
+import { listItemsInfo } from "../Utility/listItemsInfo";
 
 const Wedding = () => {
-  const listItemsInfo = [
-    { text: "Vigsel och fest på samma plats!", fontAwesome: "" },
-    { text: "Var: Sörgården i Flyinge", fontAwesome: "fas fa-map-marker-alt" },
-    { text: "När: 5e september 2020 - 14:30", fontAwesome: "far fa-clock" },
-    { text: "Dresscode: Det finaste du har", fontAwesome: "fas fa-tshirt" },
-    { text: "Presenter: Pengar till smekmånaden", fontAwesome: "fas fa-gift" },
-    { text: "Festen är barnfri", fontAwesome: "fas fa-baby" },
-    { type: "linebreak" },
-    {
-      text: "Vid tal och liknande hör av er till:",
-      fontAwesome: "far fa-comment"
-    },
-    {
-      text: "Toastmadame: Mathilda Mattsson 0708706660",
-      fontAwesome: "fas fa-female"
-    },
-    {
-      text: "Toastmaster: Robert Lucchesi 0739189604",
-      fontAwesome: "fas fa-male"
-    }
-  ];
-
   return (
     <>
       <div className="intro-text">
@@ -37,12 +16,12 @@ const Wedding = () => {
         </h2>
         <p>
           Ni är välkomna till Sörgården i Flyinge lördagen den 5e september,
-          klockan 14:30
+          klockan 16:00
           <br />
           Om vädret tillåter sker vigseln utomhus. Detta firar vi sen med en
           storartad fest!
           <br />
-          O.S.A. senast...
+          O.S.A. senast 1 juni 2020
         </p>
       </div>
 

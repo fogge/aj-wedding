@@ -1,4 +1,5 @@
 import React from "react";
+import './CustomList.scss'
 
 const CustomList = ({ listItems }) => {
   return (

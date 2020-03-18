@@ -5,7 +5,8 @@ export const constants = {
   PHONE_NUMBER: "phoneNumber",
   DELETE: "DELETE",
   ADD_NEW: "ADD_NEW",
-  RESET: "RESET"
+  RESET: "RESET",
+  CANT_ATTEND: 'cantAttend'
 };
 
 export const modals = {
