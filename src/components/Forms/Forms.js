@@ -111,12 +111,18 @@ const Forms = () => {
           {state.map((guest, i) => (
             <div key={i}>
               <h3>Gäst: {guest.name}</h3>
-              <p>Namn: {guest.name}</p>
-              <p>Email: {guest.email ? guest.email : "-"}</p>
-              <p>
-                Telefonnummer: {guest.phoneNumber ? guest.phoneNumber : "-"}
-              </p>
-              <p>Mat: {guest.food ? guest.food : "-"}</p>
+              {guest.cantAttend ? (
+                <p>- Kan inte komma</p>
+              ) : (
+                <>
+                  <p>Namn: {guest.name}</p>
+                  <p>Email: {guest.email ? guest.email : "-"}</p>
+                  <p>
+                    Telefonnummer: {guest.phoneNumber ? guest.phoneNumber : "-"}
+                  </p>
+                  <p>Mat: {guest.food ? guest.food : "-"}</p>
+                </>
+              )}
             </div>
           ))}
         </div>
