@@ -15,7 +15,7 @@ export const listItemsInfo = [
     fontAwesome: "fas fa-female"
   },
   {
-    text: "Toastmaster: Robert Lucchesi - ",
+    text: "Toastmaster: Robert Lucchesi - r.lucchesi@hotmail.com",
     fontAwesome: "fas fa-male"
   }
 ];
