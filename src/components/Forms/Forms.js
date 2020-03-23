@@ -64,9 +64,6 @@ const Forms = () => {
   }
 
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  console.log(state);
-
   const submit = () => {
     setModalOpen("");
     setLoader(true);
@@ -194,7 +191,9 @@ const Forms = () => {
             type="email"
             placeholder="Email"
             value={state[i].cantAttend ? "" : formData.email}
-            onChange={() => dispatch({ type: EMAIL, index: i })}
+            onChange={e =>
+              dispatch({ type: EMAIL, value: e.target.value, index: i })
+            }
           />
         </label>
 

@@ -4,7 +4,6 @@ import { ReactComponent as CheckIcon } from "./check.svg";
 import "./Checkbox.scss";
 
 const Checkbox = ({ onChange, name, labelText, checked }) => {
-  console.log(checked)
   return (
     <div className="checkbox-holder">
       <div className="root">
